@@ -1,0 +1,13 @@
+.instrument-manager-selection-view {
+	cursor: default;
+
+	& button {
+		display: block;
+		margin: 4px 0 0;
+		width: 112px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+}

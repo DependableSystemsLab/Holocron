@@ -1,0 +1,72 @@
+.sound-browser-controls {
+	font-size: 0; // remove gaps between inline-blocks
+	margin: 16px 0;
+	white-space: nowrap;
+}
+
+.master-volume {
+	@include input-range(128px, 32px);
+	margin: 0 8px;
+	vertical-align: middle;
+}
+
+.sounds {
+	margin: 0 auto;
+	max-width: 1280px;
+	padding: 0 32px;
+}
+
+.sounds table {
+	border-collapse: separate;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.previous, .refresh, .next {
+	height: 32px;
+	margin: 0 4px;
+	vertical-align: middle;
+	width: 32px;
+}
+
+.refresh .button-icon {
+	@include vendor-prefix(animation, rotate-360 1.2s infinite linear);
+	@include vendor-prefix(animation-play-state, paused);
+}
+
+.refresh:disabled .button-icon {
+	@include vendor-prefix(animation-play-state, running);
+}
+
+.refresh .sprite-buttons-error-large {
+	@include vendor-prefix(animation, none);
+}
+
+.collection-select {
+	display: inline-block;
+	height: 32px - $button-border * 2;
+	line-height: 32px - $button-border * 2;
+	margin: 0 8px;
+
+	& label {
+		vertical-align: middle;
+		width: 96px;
+	}
+}
+
+.search-input {
+	@include vendor-prefix(box-sizing, border-box);
+	margin: 0 4px;
+	height: 32px;
+	padding-left: 0.5em;
+	vertical-align: middle;
+	width: 24em;
+}
+
+.collection-source {
+	display: inline-block;
+	height: 32px;
+	margin: 0 8px;
+	vertical-align: middle;
+	width: 32px;
+}

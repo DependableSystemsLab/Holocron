@@ -1,0 +1,22 @@
+.track-editor {
+	background-color: $chrome-foreground;
+	display: flex;
+	display: -webkit-flex;
+	@include vendor-prefix(flex-direction, row);
+	padding: 16px 0;
+	position: relative;
+}
+
+.new-instrument-area {
+	font-size: 10px;
+	text-align: center;
+	@include vendor-prefix(flex, 1);
+	position: relative;
+	overflow: hidden;
+
+	.instructions {
+		position: absolute;
+		width: 100%;
+		top: 50%;
+	}
+}

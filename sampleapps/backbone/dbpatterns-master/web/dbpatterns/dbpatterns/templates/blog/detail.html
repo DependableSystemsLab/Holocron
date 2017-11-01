@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <section class="content">
+    {% include "blog/donation.html" %}
+    {% include "blog/post.html" %}
+    </section>
+{% endblock %}

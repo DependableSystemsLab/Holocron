@@ -1,0 +1,50 @@
+$sound-height: 32px;
+$sound-border: 2px;
+$button-offset: floor(($sound-height - $sound-border) / 4);
+$title-offset: $button-offset + 16px + $button-offset;
+
+.sound, .empty-sound {
+	@include set-height($sound-height, $sound-border, 0);
+	background-color: $panel-foreground;
+	border-right: $sound-border solid $panel-background;
+	border-bottom: $sound-border solid $panel-background;
+	font-size: 10px;
+}
+
+.sound {
+	cursor: move;
+	text-align: left;
+}
+
+// to avoid position issues with Firefox (table cell related)
+.sound-container {
+	position: relative;
+}
+
+.sound-button, .add {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: $button-offset;
+}
+
+.sound-button {
+	left: $button-offset;
+}
+
+.add {
+	right: $button-offset;
+}
+
+.title {
+	left: $title-offset;
+	overflow: hidden;
+	position: absolute;
+	right: $title-offset;
+	white-space: nowrap;
+}
+
+.sound-button-view-loading {
+	cursor: busy;
+	@include vendor-prefix(animation, pulse 0.1s infinite linear alternate);
+}

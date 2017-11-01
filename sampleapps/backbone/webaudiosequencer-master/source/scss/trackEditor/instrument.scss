@@ -1,0 +1,37 @@
+.instrument-controls {
+	font-size: 0; // remove gaps between inline-blocks
+	line-height: 32px - $drag-target-border * 2;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.remove-instrument {
+	height: 16px;
+	margin-left: ($sprite-buttons-remove-height / 2) - $drag-target-border;
+	margin-right: $drag-target-border * 2;
+	vertical-align: middle;
+	width: 16px;
+}
+
+.instrument-volume {
+	@include input-range(64px, 16px);
+	margin-left: $drag-target-border * 2;
+	margin-right: $drag-target-border * 2;
+	vertical-align: middle;
+}
+
+.instrument-title {
+	font-size: 10px;
+	padding-left: $drag-target-border * 2;
+	vertical-align: middle;
+}
+
+.instrument-state-loading .instrument-title {
+	font-style: italic;
+	@include vendor-prefix(animation, pulse 0.1s infinite linear alternate);
+}
+
+.instrument-state-error .instrument-title {
+	font-weight: bold;
+	text-decoration: line-through;
+}

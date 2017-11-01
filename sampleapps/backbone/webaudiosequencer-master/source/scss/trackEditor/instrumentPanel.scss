@@ -1,0 +1,7 @@
+.instrument-panel {
+	display: flex;
+	display: -webkit-flex;
+	@include vendor-prefix(flex, 1);
+	@include vendor-prefix(flex-direction, column);
+	padding-top: $sequence-progress-height;
+}

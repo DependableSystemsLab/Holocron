@@ -1,0 +1,18 @@
+{% load gravatar_tags %}
+<div class="document-preview">
+    <div class="entity-list">
+        {% for entity in document.entities|slice:":4" %}
+            <ul class="entity-preview">
+                <li class="name">{{ entity.name }}</li>
+                {% for attribute in entity.attributes|slice:":4" %}
+                    {% if attribute.name %}
+                        <li class="attribute">{{ attribute.name }}</li>
+                    {% endif %}
+                {% endfor %}
+                {% if entity.attributes|length > 4 %}
+                    <li class="attribute">...</li>
+                {% endif %}
+            </ul>
+        {% endfor %}
+    </div>
+</div>

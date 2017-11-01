@@ -1,0 +1,8 @@
+.sequence-progress {
+	height: $sequence-progress-height;
+
+	& button {
+		height: 100%;
+		vertical-align: top;
+	}
+}

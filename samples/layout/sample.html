@@ -1,0 +1,63 @@
+<h3 ng-if="userData.display">{{userData.intro}}</h3>
+<ul>
+	<li ng-repeat="movie in userData">
+		{{movie.name}} <!-- MISTAKE #2: movie.name is undefined in ResultsCtrl (it would be defined if the ng-repeat had been "movie in userData.movieList") -->
+	</li>
+</ul>
+<div id="movieCount">
+	<ng-pluralize count="userData.count" when="movieForms"></ng-pluralize> <!-- MISTAKE #3: userData.count is defined as a String, but the expected type is Number -->
+</div>
+<br />
+<button ng-click="alertUserName()">
+	Which User?
+</button>
+
+<span class="hello"></span>
+<span class="somestring"></span>
+<span class="anotherstring"></span>
+<span class="5"></span>
+
+<div class="tpm"></div>
+<div class="aotc"></div>
+<div class="rots"></div>
+<div class="anh"></div>
+<div class="tesb"></div>
+<div class="rotj"></div>
+<div class="tfa"></div>
+<div class="e8"></div>
+<div class="e9"></div>
+<div class="e10"></div>
+<div class="e11"></div>
+<div class="e12"></div>
+<div class="e13"></div>
+<div class="e14"></div>
+<div class="e15"></div>
+<div class="e16"></div>
+<div class="e17"></div>
+<div class="e18"></div>
+<div class="e19"></div>
+
+<div class="ngTest">
+    <span class="e1tpm"></span>
+    <span class="e2aotc"></span>
+    <span class="e3rots"></span>
+    <span class="e4anh"></span>
+    <span class="e5tesb"></span>
+    <span class="e6rotj"></span>
+    <span class="e7tfa"></span>
+</div>
+
+<!--Uncomment the following HTML and comment the above if you want to see the CORRECT execution-->
+<!--h3 ng-if="userData.display">{{userData.intro}}</h3>
+<ul>
+	<li ng-repeat="movie in userData.movieList">
+		{{movie.name}}
+	</li>
+</ul>
+<div id="movieCount">
+	<ng-pluralize count="userData.count" when="movieForms"></ng-pluralize>
+</div>
+<br />
+<button ng-click="alertUserName()">
+	Which User?
+</button-->

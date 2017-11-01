@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load gravatar document_tags %}
+
+{% block body-id %}document-forks{% endblock %}
+
+{% block content %}
+    <section class="content forks documents">
+        <h2>forks of &quot;{{ document.title }}&quot; pattern</h2>
+        <ul>
+            {% for document in forks %}
+                <li>
+                    <a class="gravatar" title="{{ document.user }}" href="{% url auth_profile document.user.username %}">
+                        <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_user document.user  %}">
+                    </a>
+                    <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+                    <div class="info">
+                        <span class="icon fork">{{ document.get_fork_count }} fork</span>
+                        <span class="icon star">{{ document.star_count }} star</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li>{{ document.title }} hasn't got any fork.</li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

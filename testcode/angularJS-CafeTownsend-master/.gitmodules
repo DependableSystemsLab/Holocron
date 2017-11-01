@@ -1,0 +1,3 @@
+[submodule "scripts"]
+	path = scripts
+	url = https://ThomasBurleson@github.com/ThomasBurleson/node-proxy-services

@@ -1,0 +1,11 @@
+{
+    "name": "holocron-js",
+    "title": "HolocronJS",
+    "description": "Generalized inconsistency detector for web applications",
+    "homepage": "http://ece.ubc.ca/~frolino",
+    "version": "0.0.1",
+    "author": "Frolin S. Ocariza, Jr. <frolino@ece.ubc.ca> (https://github.com/frolino)",
+    "engines": {
+        "brackets": ">=1.4.0"
+    }
+}

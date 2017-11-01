@@ -1,0 +1,8 @@
+.idea
+settings_local.py
+data
+*.pyc
+*~
+.DS_Store
+web/dbpatterns/dbpatterns/static/CACHE/
+node_modules/

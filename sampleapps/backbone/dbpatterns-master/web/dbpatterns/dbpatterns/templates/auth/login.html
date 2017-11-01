@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <section class="content">
+
+        <div class="two-column">
+        <h2>Login</h2>
+        <form action="{% url auth_login %}?next={{ next }}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Login">
+        </form>
+        </div>
+
+        <hr class="or">
+
+        <div class="two-column">
+            {% include "auth/login_github.html" %}
+        </div>
+
+
+    </section>
+
+
+
+
+{% endblock %}

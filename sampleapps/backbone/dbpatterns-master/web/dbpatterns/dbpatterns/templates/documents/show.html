@@ -1,0 +1,51 @@
+{% extends "documents/app.html" %}
+{% load gravatar document_tags %}
+
+{% block body-id %}document-show-view{% endblock %}
+
+{% block tools %}
+    <div class="profile">
+        <div class="image">
+            <img src="{% gravatar_for_user document.user %}" alt="{{ document.user.username }}">
+        </div>
+        <div class="info">
+            <span>{% document_count_for_user document.user %} patterns</span>
+            <h4><a href="{% url auth_profile document.user.username %}">{{ document.user.username }}</a></h4>
+        </div>
+    </div>
+    <nav class="tools">
+    <ul>
+        <li><a href="#export-list" data-toggle="true">Export</a></li>
+        <li><a href="#comments" id="show-comments">Comments ({{ document.comment_count }})</a></li>
+    </ul>
+    </nav>
+{% endblock %}
+{% block nav %}
+    <ul>
+        <li><a href="{% url home %}">Home</a></li>
+        {% ifequal user document.user %}
+        <li><a href="{% url my_documents %}">Back to list</a></li>
+        <li><a href="{% url edit_document document.pk %}">Edit</a></li>
+        {% else %}
+        <li><a href="{% url fork_document document.pk %}">Fork</a></li>
+        {% endifequal %}
+        <li><form action="{% url star_document document.pk %}" method="post">
+            {% csrf_token %}
+            {% if user.pk in document.stars %}
+            <input type="submit" class="anchor" value="Unstar ({{ document.star_count }})">
+            {% else %}
+            <input type="submit" class="anchor" value="Star ({{ document.star_count }})">
+            {% endif %}
+        </form></li>
+    </ul>
+
+{% endblock %}
+
+{% block app-header %}
+{% if document.fork_of %}
+<h3 class="fork-of">
+    <a title="fork-of" class="icon fork" href="{% url show_document document.fork_of %}"></a>
+</h3>
+{% endif %}
+{{ block.super }}
+{% endblock %}

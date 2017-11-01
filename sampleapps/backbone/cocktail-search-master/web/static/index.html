@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cocktail search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+<link href="/static/all.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Donegal+One" rel="stylesheet">
+<link href="/static/opensearch.xml" rel="search" type="application/opensearchdescription+xml" title="Cocktail Search">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+<script src="/static/script.js"></script>
+<script type="text/template" id="cocktail-template">
+<div class="picture">
+	<% if (recipe.picture_url) { %>
+		<a href="<%- recipe.url %>">
+			<img src="<%- recipe.picture_url %>" alt="<%- recipe.title %>">
+		</a>
+	<% } else { %>
+		<span></span>
+	<% } %>
+</div>
+<div class="details">
+	<h2><a href="<%- recipe.url %>"><%- recipe.title %></a></h2>
+	<div class="ingredients-and-sources">
+		<ul class="ingredients">
+			<% _.each(recipe.ingredients, function(ingredient) { %>
+				<li><%- ingredient %></li>
+			<% }); %>
+		</ul>
+		<div class="sources">
+			<h3>Source</h3>
+			<ul>
+				<% _.each(sources, function(recipes, source) { %>
+					<li>
+						<% _.each(recipes, function(otherRecipe, idx) { %>
+							<a <% if (recipe == otherRecipe) { %>class="active"<% } else { %>href="javascript:void(0)"<% } %> data-source="<%- source %>" data-recipe="<%= idx %>"><% if (idx == 0) { %><%- source %><% } else { %>(<%= idx + 1 %>)<% } %></a>
+						<% }); %>
+					</li>
+				<% }); %>
+			</ul>
+		</div>
+	</div>
+</div>
+</script>
+<script type="text/template" id="firefox-warning-template">
+<div class="alert">
+	<% if (version < 18) { %>
+		<strong>Update your web browser:</strong> This website is using
+		the latest web technologies. And the version of Firefox that you
+		are using is too old, to use this website. So please <a href="<%
+			if (android) {
+				%>https://play.google.com/store/apps/details?id=org.mozilla.firefox<%
+			} else if (debian) {
+				%>http://mozilla.debian.net/<%
+			} else {
+				%>http://www.mozilla.org/firefox/<%
+			}
+		%>">update to the latest version of Firefox</a> or use a recent
+		version of <a href="<%
+			if (android) {
+				%>https://play.google.com/store/apps/details?id=com.android.chrome<%
+			} else {
+				%>http://www.google.com/chrome/<%
+			}
+		%>">Google Chrome</a> instead.
+	<% } else { %>
+		<strong>Enable flexbox:</strong> In order to make this website
+		render correctly you have to change the about:config preference
+		<em>layout.css.flexbox.enabled</em> to <em>true</em>.
+		<% if (version < 22) { %>
+			Alternatively you can <a href="<%
+				if (android) {
+					%>https://play.google.com/store/apps/details?id=org.mozilla.firefox_beta<%
+				} else if (debian) {
+					%>http://mozilla.debian.net/<%
+				} else {
+					%>http://www.mozilla.org/firefox/beta/<%
+				}
+			%>">update to the beta version of Firefox</a>, where flexbox
+			is enabled by default.
+		<% } %>
+	<% } %>
+</div>
+</script>
+</head>
+<body>
+<div id="firefox-warning">
+</div>
+<div id="search-form">
+	<form>
+		<input name="ingredient" type="text" placeholder="Enter an ingredient">
+	</form>
+</div>
+<div id="search-results">
+</div>
+<a href="https://github.com/wallunit/cocktail-search">
+	<img id="github-ribbon" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">
+</a>
+<a href="/static/jslicense.html" rel="jslicense" id="jslicense">JavaScript license information</a>
+</body>
+</html>

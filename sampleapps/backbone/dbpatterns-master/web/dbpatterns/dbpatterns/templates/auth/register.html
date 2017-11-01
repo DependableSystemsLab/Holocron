@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <section class="content">
+
+        <div class="two-column">
+        <h2>Register</h2>
+        <form action="{% url auth_registration %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Register">
+        </form>
+        </div>
+
+        <hr class="or">
+
+        <div class="two-column">
+            {% include "auth/login_github.html" %}
+        </div>
+
+    </section>
+
+
+{% endblock %}

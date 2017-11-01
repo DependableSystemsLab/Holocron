@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="new-document content">
+        <h2>Fork Document</h2>
+        <form action="{% url fork_document document_id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Fork">
+        </form>
+    </section>
+{% endblock %}

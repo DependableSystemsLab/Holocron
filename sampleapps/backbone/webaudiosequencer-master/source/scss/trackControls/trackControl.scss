@@ -1,0 +1,47 @@
+.track-control {
+	display: inline-block;
+	height: $track-control-height;
+	line-height: $track-control-height;
+	margin-right: 8px;
+	position: relative;
+	width: 128px;
+
+	& span {
+		display: inline-block;
+		font-size: 12px;
+		height: 100%;
+		vertical-align: middle;
+	}
+}
+
+.track-control-select {
+	background-color: $chrome-background;
+	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+
+	&:hover {
+		background-color: $action-foreground-hover;
+	}
+
+	&:active {
+		background-color: $action-foreground-active;
+	}
+}
+
+.track-control-selected {
+	background-color: $chrome-foreground-alternate;
+	cursor: default;
+
+	&:hover {
+		background-color: $chrome-foreground-alternate;
+	}
+}
+
+.remove-track {
+	height: 16px;
+	margin: 0 8px;
+	vertical-align: middle;
+	width: 16px;
+}

@@ -1,0 +1,17 @@
+.grid-container {
+	cursor: pointer;
+	display: flex;
+	display: -webkit-flex;
+}
+
+.play-state {
+	cursor: url(images/play-cursor.png), pointer;
+}
+
+.add-state {
+	cursor: url(images/add-cursor.png), pointer;
+}
+
+.remove-state {
+	cursor: url(images/remove-cursor.png), pointer;
+}

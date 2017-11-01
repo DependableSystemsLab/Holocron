@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="new-document content">
+        <h2>New Document</h2>
+        <form action="{% url new_document %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p class="buttons">
+                <input type="submit" class="anchor" value="Create">
+            </p>
+        </form>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(function () {
+            var row = $("#id_entities").parent().hide();
+            $("#id_create_from").change(function () {
+                if ($(this).val()) {
+                    row.show();
+                } else {
+                    row.hide()
+                }
+            }).change();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,30 @@
+.playback-controls {
+	font-size: 0; // remove gaps between inline-blocks
+	margin: 32px 0;
+	text-align: center;
+}
+
+.play-stop-label {
+	height: 32px;
+	margin-right: 8px;
+	vertical-align: middle;
+	width: 32px;
+}
+
+.bpm-slider {
+	@include input-range(192px, 24px);
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.bpm-number {
+	@include vendor-prefix(box-sizing, border-box);
+	height: 24px;
+	width: 4em;
+}
+
+.bpm-slider, .bpm-number {
+	margin-left: 8px;
+	display: inline-block;
+	vertical-align: middle;
+}

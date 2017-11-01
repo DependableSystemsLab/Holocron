@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Simply Do - Balance Projector</title>
+  <link rel="stylesheet" href="css/default.css"/>
+
+</head>
+<body>
+  <div id="simplyDoBanner">Balance Projector is a <a href="http://simplydo.com" target="new">Simply Do</a> project.</div>
+  
+  <div id="top">
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <ul class="social-buttons cf">
+            <li><a href="http://twitter.com/share" class="socialite twitter-share" data-text="Projecting my cash flow with Simply Do Balance Projector" data-url="http://simplydo.com/projector" data-count="vertical" data-via="simplydothat" rel="nofollow" target="_blank"><span class="vhidden">Twitter</span></a></li>
+            <li><a href="https://plus.google.com/share?url=http://simplydo.com/projector" class="socialite googleplus-one" data-size="tall" data-href="http://simplydo.com/projector" rel="nofollow" target="_blank"><span class="vhidden">Google+</span></a></li>
+            <li><a href="http://www.facebook.com/sharer.php?u=http://simplydo.com/projector&amp;t=Simply%20Do%20Balanace%20Projector" class="socialite facebook-like" data-href="http://simplydo.com/projector" data-send="false" data-layout="box_count" data-width="60" data-show-faces="false" rel="nofollow" target="_blank"><span class="vhidden">Facebook</span></a></li>
+          </ul>
+          <h1>Balance Projector</h1>
+          <p>A <strong>real time</strong> personal finance projector.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" ng-controller="projectorCtrl">
+    <div class="row">
+      <div class="span7">
+
+        
+        <div class="box">
+          <h2>How much money do you have today?</h2>
+          <input type="text" ng-model="startBalance" placeholder="Enter your current balance" />
+        </div>
+        
+        
+        <div class="box">
+          <h2>What is your regular income?</h2>
+          <ul>
+            <li ng-repeat="income in incomes" class="active-{{income.active}}">
+              <span><input type="checkbox" ng-model="income.active"></span>
+              <input type="text" ng-model="income.name" placeholder="What is it? e.g. Salary..." class="span3" />
+              <input type="text" ng-model="income.amount" placeholder="Enter Amount" class="span1"/>
+              <select class="span2" ng-model='income.frequency'>
+                <option value="30.4166666666667">daily</option>
+                <option value="21.6666666666667">work days</option>
+                <option value="4.33333333333333">weekly</option>
+                <option value="2.16666666666667">every 2 weeks</option>
+                <option value="1">monthly</option>
+              </select>
+              <a class="" ng-click="removeIncome($index);"><i class="icon-minus-sign"></i></a>
+            </li>
+          </ul>
+          <button class="btn btn-indented" ng-click="addIncome();"><i class="icon-plus"></i> Add</button>
+        </div>
+
+
+        
+        <div class="box">
+          <h2>What are your regular expenses?</h2>
+          <ul>
+            <li ng-repeat="expense in expenses" class="active-{{expense.active}}">
+              <span><input type="checkbox" ng-model="expense.active"></span>
+              <input type="text" ng-model="expense.name" placeholder="e.g. Rent..." class="span3" />
+              <input type="text" ng-model="expense.amount" placeholder="Enter Amount" class="span1" />
+              <select class="span2" ng-model='expense.frequency'>
+                <option value="30.4166666666667">Daily</option>
+                <option value="21.6666666666667">Business Daily</option>
+                <option value="4.33333333333333">Weekly</option>
+                <option value="2.16666666666667">Every 2 Weeks</option>
+                <option value="1">Monthly</option>
+              </select>
+              <a class="" ng-click="removeExpense($index);"><i class="icon-minus-sign"></i></a>
+            </li>
+          </ul>
+          <button class="btn btn-indented" ng-click="addExpense();"><i class="icon-plus"></i> Add</button>
+        </div>
+
+        
+        <div class="box">
+          <h2>Any non-Recurring transactions?</h2>
+          <ul>
+            <li ng-repeat="transaction in nonRecurring" class="active-{{transaction.active}}">
+              <span><input type="checkbox" ng-model="transaction.active"></span>
+              <input type="text" ng-model="transaction.name" placeholder="e.g. Bonus..." class="span3" />
+              <input type="text" ng-model="transaction.amount" placeholder="Enter Amount" class="span1" />
+              <select class="span2" ng-model='transaction.month' ng-options="getMonthLabel(value) for value in [1,2,3,4,5,6,7,8,9,10,11,12]">
+              </select>
+              <a class="" ng-click="removeTransaction($index);"><i class="icon-minus-sign"></i></a>
+            </li>
+          </ul>
+          <button class="btn btn-indented" ng-click="addTransaction();"><i class="icon-plus"></i> Add</button>
+        </div>
+
+        <div class="store" ng-show="storageSupport">
+          <p>
+            <button class="btn btn-success" ng-click="save();"><i class="icon-hdd icon-white"></i> Save</button>
+            <button class="btn btn-danger" ng-click="clear();"><i class="icon-trash icon-white"></i> Erase</button>
+          </p>
+          <p>Important: You data is stored locally on this very device only.</p>
+        </div>
+
+      </div>
+
+      <div class="span5">
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th colspan="2" class="number">Accumulated net income</th>
+              <th class="number">Balance</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="change in montlyProjection();">
+              <td>{{getMonthLabel($index+1)}}</td>
+              <td class="number">{{roundDown(change)}}</td>
+              <td class="number" ng-class="positiveNegative(convertToNumber(startBalance) + change)">{{roundDown(convertToNumber(startBalance) + change)}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="number">Per month</th>
+              <th class="number">Per year</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Income</td>
+              <td class="number">{{roundDown(monthlyIncome())}}</td>
+              <td class="number">{{roundDown(monthlyIncome()*12)}}</td>
+            </tr>
+            <tr>
+              <td>Expenses</td>
+              <td class="number">{{roundDown(monthlyExpense())}}</td>
+              <td class="number">{{roundDown(monthlyExpense()*12)}}</td>
+            </tr>
+            <tr>
+              <td>Non-Recurring</td>
+              <td class="number"></td>
+              <td class="number">{{tallyTransactions()}}</td>
+            </tr>
+            <tr>
+              <td><strong>Net income</strong></td>
+              <td class="number" ng-class="positiveNegative(monthlyNet())"><strong>{{roundDown(monthlyNet())}}</strong></td>
+              <td class="number" ng-class="positiveNegative((monthlyNet()*12)+tallyTransactions())"><strong>{{roundDown(monthlyNet()*12)+tallyTransactions()}}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="span4">
+            <p>© 2012 <a href="http://simplydo.com" target="new">Simply Do</a>, LLC.<br />All Rights Reserved.</p>
+          </div>
+          <div class="span4">
+            <ul class="unstyled">
+              <li>Follow <a href="http://twitter.com/#!/SimplyDoThat" target="new">@SimplyDoThat</a> on Twitter</li>
+              <li>Inspired by an iOS application by <a href="http://twitter.com/#!/thejohnny" target="new">@theJohnny</a></li>
+            </ul>
+          </div>
+          <div class="span4">
+            <ul class="unstyled">
+              <li>The source code is open and <a href="https://github.com/SimplyDo/projector" target="new">available on Github</a></li>
+              <li>Created with <a href="http://angularjs.org/" target="new">AngularJS</a> by Google</li>
+              <li>Social buttons by <a href="http://socialitejs.com/" target="new">Socialite.js</a></li>
+              <li>The UI is <a href="http://twitter.github.com/bootstrap/" target="new">Twitter Bootstrapped</a></li>
+              <li>Hosted with <a href="http://pages.github.com/" target="new">Github pages</a></li>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>  
+    </div>  
+
+
+
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/socialite/socialite.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29523960-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+</body>
+</html>

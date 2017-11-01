@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <section class="content landing">
+        <p>
+            Dbpatterns is a service that allows you to create, share, explore
+            database models on the web.
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://dbpatterns.com">Tweet</a>
+        </p>
+    </section>
+
+    <div class="dashboard">
+        <aside id="sidebar">
+            <h2>Search</h2>
+            {% include "documents/search_form.html" %}
+            <article id="document-tabs" class="tabs">
+                <nav>
+                    <ul>
+                        <li class="active"><a href="#featured-patterns">Featured</a></li>
+                        <li><a href="#starred-patterns">Starred</a></li>
+                    </ul>
+                </nav>
+                <section id="featured-patterns">
+                    <ul>
+                        {% for document in featured_documents %}
+                            <li>
+                            <a class="author" href="{% url auth_profile document.user.username %}">{{ document.user.username }}/</a>
+                            <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </section>
+                <section id="starred-patterns">
+                    <ul>
+                        {% if user.is_anonymous %}
+                            <li><a href="{% url auth_login %}">Login to see rated patterns</a></li>
+                        {% else %}
+                        {% for document in starred_documents %}
+                            <li>
+                                <a class="author" href="{% url auth_profile document.user.username %}">{{ document.user.username }}/</a>
+                                <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+                            </li>
+                        {% empty %}
+                            <li>You have no starred document.</li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                </section>
+            </article>
+            {% include "blog/latest.html" %}
+            {% include "blog/donation.html" %}
+        </aside>
+
+        {% if is_public %}
+            {% include "newsfeed/public_newsfeed.html" %}
+        {% else %}
+            {% include "newsfeed/private_newsfeed.html" %}
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+    <script type="text/javascript">
+        new hipo.InfinityScroll({
+            "pagination_selector": ".load-more",
+            "next_link_selector": ".next",
+            "content_selector": ".newsfeed",
+            "max_page": 5
+        })
+    </script>
+    <!-- twitter share button -->
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}
+

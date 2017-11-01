@@ -1,0 +1,110 @@
+{% load gravatar_tags %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}dbpatterns - create, share, explore database patterns{% endblock %}</title>
+    {% load compress %}
+    {% compress css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/h5bp.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css?v=1.2" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/prettify.css" />
+    {% endcompress %}
+    {% block extra-head %}{% endblock %}
+</head>
+<body id="{% block body-id %}dbpatterns{% endblock %}">
+
+{% block header %}
+    <header id="banner">
+        <h1>
+            {% block logo %}
+            <a href="{% url home %}">db<span>patterns</span></a>
+            {% endblock %}
+            {% if user.is_authenticated %}
+            <a href="{% url notifications %}" id="user-notifications-button">{% if notification_count %}<span>{{ notification_count }}</span>{% endif %}</a>
+            {% endif %}
+        </h1>
+        <nav>
+            {% if user.is_anonymous %}
+            <ul>
+                <li><a href="{% url auth_registration %}">Register</a></li>
+                <li><a href="{% url auth_login %}">Login</a></li>
+                <li><a href="{% url home %}">Home</a></li>
+            </ul>
+            {% else %}
+            <ul>
+                <li><a href="{% url auth_logout %}">Logout</a></li>
+                <li class="my-profile">
+                    <a href="{% url auth_profile user.username %}" class="gravatar">
+                        <img src="{% gravatar_for_user user 40 %}"></a>
+                </li>
+                <li><a href="{% url my_documents %}">My Patterns</a></li>
+                <li><a href="{% url new_document %}">New Pattern</a></li>
+            </ul>
+            {% endif %}
+        </nav>
+        <div id="user-notifications">
+            <section><span class="loading">Loading</span></section>
+            <footer><a href="{% url notifications %}">See all notifications</a></footer>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        dbpatterns is an open-source project. you can contribute on
+        <a href="http://github.com/fatiherikli/dbpatterns">github</a>.
+    </footer>
+{% endblock %}
+
+{% block scripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.string/2.3.0/underscore.string.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+
+
+    {% compress js %}
+    <script src="{{ STATIC_URL }}js/libs/jquery/jquery.class.min.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/jquery/jquery.form2json.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/jquery/jquery.jsplumb.min.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/keymaster/keymaster.min.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/backbone/backbone.shortcuts.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/backbone/tastypie.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/hipo/hipo.infinityscroll.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/socket.io/socket.io.min.js"></script>
+    <script src="{{ STATIC_URL }}js/utilities.js"></script>
+    {% endcompress %}
+    <script type="text/javascript">
+        !function ($) {
+            // django CSRF token
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                }
+            })
+        }(jQuery);
+    </script>
+{% endblock %}
+
+    <!-- google analytic snippet -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-35600874-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+</body>
+</html>

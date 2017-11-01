@@ -1,0 +1,8 @@
+NEWS_TYPE_REGISTRATION = "registration"
+NEWS_TYPE_DOCUMENT = "document"
+NEWS_TYPE_FORK = "fork"
+NEWS_TYPE_COMMENT = "comment"
+NEWS_TYPE_STAR = "star"
+NEWS_TYPE_FOLLOWING = "following"
+
+NEWSFEED_LIMIT = 20
